@@ -1,55 +1,63 @@
-const { Schema , model } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const UsuarioSchema = Schema({
 
-    nombre:{
-        type:String,
-        required:true
+    nombre: {
+        type: String,
+        required: true
     },
-    email:{
-        type:String,
-        required:[true,'La contraseña es obligatoria'],
-        unique:true
+    email: {
+        type: String,
+        required: [true, 'La contraseña es obligatoria'],
+        unique: true
     },
-    password:{
-        type:String,
-        required:true
+    password: {
+        type: String,
+        required: true
     },
-    rol:{
-        estudiante:{ type: Schema.Types.ObjectId,
-                    ref: 'Estudiante'},
-
-        profesor:{ type: Schema.Types.ObjectId,
-                    ref: 'Profesor'},
-
-        admin:{ type: Schema.Types.ObjectId,
-                    ref: 'Admin'},
+    rol: {
+        type: String,
+        required:[ true, 'El rol debe ser obligatorio'],
+        emun:['ADMIN_ROLE','ESTUDIANTE_ROLE','PROFESOR_ROL','USUARIO_ROL']
     },
-    genero:{
-        type:String,
-        required:true
+    genero: {
+        type: String,
+        required: true
     },
-    domicilio:{
+    domicilio: {
         departamento: String,
         cuidad: String,
         direccion: String
     },
-    avatar:{
-        type:String,
+    avatar: {
+        type: String,
     },
-    estado:{
-        type:Boolean,
-        default:true
+    estudiante: {
+        type: Schema.Types.ObjectId,
+        ref: 'Estudiante'
     },
-    google:{
-        type:Boolean,
-        default:false
+
+    profesor: {
+        type: Schema.Types.ObjectId,
+        ref: 'Profesor'
+    },
+    admin: {
+        type: Schema.Types.ObjectId,
+        ref: 'Admin'
+    },
+    estado: {
+        type: Boolean,
+        default: true
+    },
+    google: {
+        type: Boolean,
+        default: false
     }
 });
 
 
 UsuarioSchema.methods.toJSON = function () {
-    let {__v ,password, ...usuario} = this.toObject();;
+    let { __v, password, ...usuario } = this.toObject();;
 
     return usuario;
 }

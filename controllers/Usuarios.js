@@ -12,9 +12,10 @@ const crearUsuario = async (req = request, res = response) => {
         password,
         nombre,
         domicilio,
-        genero } = req.body;
+        genero,
+        rol } = req.body;
 
-    usuario = new Usuario({ email, password, nombre, domicilio, genero });
+    usuario = new Usuario({ email, password, nombre, domicilio, genero,rol });
 
     //Encriptar contraseña 
     const salt = bcrypt.genSaltSync();
@@ -70,10 +71,11 @@ const actualizarUsuario = async (req = request, res = response) => {
 const findUsuarios = async (req = request, res = response) => {
 
     const { limite = 5, desde = 0 } = req.query
-    const query = { estado : true };
+    const query = { estado: true };
 
 
-    const [total,usuarios] = await Promise.all([
+
+    const [total, usuarios] = await Promise.all([
         Usuario.countDocuments(query),
         Usuario.find(query)
             .limit(Number(limite))
@@ -94,11 +96,14 @@ const findUsuarios = async (req = request, res = response) => {
 
 //Borrar Usuario de la base de datos (estado:false)
 
-const borrarUsuario =async (req = request, res = response) => {
+const borrarUsuario = async (req = request, res = response) => {
 
-const { id } = req.params;
+    const { id } = req.params;
+    const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
 
-const usuario = await Usuario.findByIdAndUpdate(id, {estado : false} );
+    res.json({
+        usuario,
+    })
 
 
 }
