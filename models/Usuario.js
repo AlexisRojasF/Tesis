@@ -18,10 +18,12 @@ const UsuarioSchema = Schema({
     rol: {
         type: String,
         required:[ true, 'El rol debe ser obligatorio'],
+        default:'USUARIO_ROL',
         emun:['ADMIN_ROLE','ESTUDIANTE_ROLE','PROFESOR_ROL','USUARIO_ROL']
     },
     genero: {
         type: String,
+        default: 'indefinido',
         required: true
     },
     domicilio: {
