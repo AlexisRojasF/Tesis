@@ -1,22 +1,17 @@
 const { Schema , model } = require('mongoose');
 
-const EstudianteSchema = Schema({
+const ProfesorSchema = Schema({
 
     usuario_id:{
         type: Schema.Types.ObjectId,
         ref: 'Usuario'
     },
-    programa_id:{
-        type: Schema.Types.ObjectId,
-        ref: 'Programa'
-    },
     estado: {
         type: Boolean,
         default: true
     },
-    formularios:[{
-        type: Schema.Types.ObjectId,
-        ref: 'Formulario'
+    asignaturas:[{
+        type: String,
     }],
     grupos:[{
         type: Schema.Types.ObjectId,
@@ -25,4 +20,4 @@ const EstudianteSchema = Schema({
 
 });
 
-module.exports = model('Estudiante', EstudianteSchema);
+module.exports = model('Profesor', ProfesorSchema);

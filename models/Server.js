@@ -43,6 +43,9 @@ class Server {
 
         this.app.use('/api/usuario', require('../routes/Usuarios'));
         this.app.use('/api/auth', require('../routes/Auth'));
+        this.app.use('/api/estudiante', require('../routes/Estudiante'));
+        this.app.use('/api/profesor', require('../routes/Profesor'));
+        this.app.use('/api/admin', require('../routes/Admin'));
 
     }
 
