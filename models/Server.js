@@ -46,6 +46,11 @@ class Server {
         this.app.use('/api/estudiante', require('../routes/Estudiante'));
         this.app.use('/api/profesor', require('../routes/Profesor'));
         this.app.use('/api/admin', require('../routes/Admin'));
+        this.app.use('/api/facultad', require('../routes/Facultad'));
+        this.app.use('/api/programa', require('../routes/Programa'));
+        this.app.use('/api/formulario', require('../routes/Formulario'));
+        this.app.use('/api/grupo', require('../routes/Grupo'));
+        this.app.use('/api/setting', require('../routes/Settings'));
 
     }
 
