@@ -1,6 +1,6 @@
 const { response, request } = require('express');
-const Settings = require('../models/Settings');
-const Estudiante = require('../models/Estudiante');
+const {Settings} = require('../models');
+
 
 //Crear Settings
 const crearSettings = async (req = request, res = response) => {
@@ -9,8 +9,6 @@ const crearSettings = async (req = request, res = response) => {
 
         settings = new Settings();
         await settings.save();
-
-     
 
     } catch (error) {
         console.log(error);
@@ -23,9 +21,7 @@ const crearSettings = async (req = request, res = response) => {
 
 
 //habilitar o desabilitar formulario
-
 const habilitarFormularios = async (req = request, res = response) => {
-
 
     const id = "6029ad047413ab4398b56760";
     const {habilitar}= req.body
@@ -48,14 +44,6 @@ const habilitarFormularios = async (req = request, res = response) => {
     }
 
 }
-
-
-
-
-
-
-
-
 
 
 module.exports = {

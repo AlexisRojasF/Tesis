@@ -1,6 +1,6 @@
 const { response, request } = require('express');
-const Usuario = require('../models/Usuario');
-const Estudiante = require('../models/Estudiante');
+const {Estudiante} = require('../models');
+
 
 //Crear Estudiante
 const crearEstudiante = async (req = request, res = response) => {
@@ -9,7 +9,7 @@ const crearEstudiante = async (req = request, res = response) => {
 
     try {
 
-        let estudiante = await Estudiante.findOne({ usuario_id : usuario._id });
+        let estudiante = await Estudiante.findOne({ usuario_id: usuario._id });
 
         if (estudiante) {
 
@@ -27,12 +27,12 @@ const crearEstudiante = async (req = request, res = response) => {
         await estudiante.save();
         await usuario.save();
 
-        
-    res.json({
-        usuario,
-        estudiante
-    })
-        
+
+        res.json({
+            usuario,
+            estudiante
+        })
+
     } catch (error) {
         console.log(error);
         res.status(500).json({
@@ -42,14 +42,14 @@ const crearEstudiante = async (req = request, res = response) => {
     }
 }
 
-//Actualizar Estudiante
 
+//Actualizar Estudiante
 const actualizarEstudiante = async (req = request, res = response) => {
 
     const { id } = req.params;
     const body = req.body
 
-    const estudiante = await Estudiante.findByIdAndUpdate(id,body );
+    const estudiante = await Estudiante.findByIdAndUpdate(id, body);
 
     res.json({
         msg: 'Actulizar',
@@ -57,14 +57,13 @@ const actualizarEstudiante = async (req = request, res = response) => {
     })
 
 }
-//-------------------------------
 
 
 //eliminar estudiante cambiar estado a false
 const borrarEstudiante = async (req = request, res = response) => {
 
     const { id } = req.params;
-    const estudiante = await Estudiante.findByIdAndUpdate(id,{ estado: false } );
+    const estudiante = await Estudiante.findByIdAndUpdate(id, { estado: false });
 
     res.json({
         msg: 'borrar',
@@ -72,6 +71,7 @@ const borrarEstudiante = async (req = request, res = response) => {
     })
 
 }
+
 
 //Traer una lista de usuarios paginada
 const buscarEstudiantes = async (req = request, res = response) => {
@@ -84,19 +84,22 @@ const buscarEstudiantes = async (req = request, res = response) => {
     const [total, estudiantes] = await Promise.all([
         Estudiante.countDocuments(query),
         Estudiante.find(query)
+        .populate('formularios')
+        .populate('grupos')
+        .populate('programa_id')
             .limit(Number(limite))
             .skip(Number(desde))
     ]);
 
 
     res.json({
-        msg: 'usuarios paginador',
+        msg: 'Estudiantes paginados',
         total,
         estudiantes
     })
 }
 
-//--------------------------------------
+
 
 module.exports = {
     crearEstudiante,

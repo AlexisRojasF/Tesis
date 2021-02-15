@@ -1,5 +1,5 @@
 const { response, request } = require('express');
-const Facultad = require('../models/Facultad');
+const {Facultad} = require('../models');
 
 //Crear Facultad
 const crearFacultad = async (req = request, res = response) => {
@@ -39,8 +39,8 @@ const crearFacultad = async (req = request, res = response) => {
     }
 }
 
-//Actualizar Facultad
 
+//Actualizar Facultad
 const actualizarFacultad = async (req = request, res = response) => {
 
     const { id } = req.params;
@@ -54,7 +54,6 @@ const actualizarFacultad = async (req = request, res = response) => {
     })
 
 }
-//-------------------------------
 
 
 //eliminar estudiante cambiar estado a false
@@ -70,67 +69,29 @@ const borrarFacultad = async (req = request, res = response) => {
 
 }
 
+
 //Traer una lista de usuarios paginada
 const buscarFacultad = async (req = request, res = response) => {
 
     const { limite = 5, desde = 0 } = req.query
     const query = { estado: true };
 
-
-
     const [total, facultades] = await Promise.all([
         Facultad.countDocuments(query),
         Facultad.find(query)
+        .populate('programa_id')
             .limit(Number(limite))
             .skip(Number(desde))
     ]);
 
 
     res.json({
-        msg: 'usuarios paginador',
+        msg: 'facultades paginadas',
         total,
         facultades
     })
 }
 
-//--------------------------------------
-
-
-// TODO: eliminar asignaturas 
-
-const eliminarPrograma = async (req = request, res = response) => {
-
-    const { id } = req.params;
-    const { programa_id } = req.body;
-
-
-    const profesor = await Profesor.findByIdAndUpdate(id, { $pull: { asignaturas: programa } });
-
-    res.json({
-        msg: 'actualizar asignatura',
-        profesor
-    })
-
-}
-
-//------------------------------------
-//TODO: Agregar  asignaturas 
-
-const ActulizarPrograma = async (req = request, res = response) => {
-
-    const { id } = req.params;
-    const { asignatura } = req.body
-
-    const profesor = await Profesor.findByIdAndUpdate(id, { $addToSet: { asignaturas: asignatura } });
-
-    res.json({
-        msg: 'actualizar asignatura',
-        profesor
-    })
-
-}
-
-//------------------------------------
 
 module.exports = {
     crearFacultad,

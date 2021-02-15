@@ -4,7 +4,6 @@ const { check } = require('express-validator');
 const {
     validarCampos,
     validarToken,
-    esAdmin,
     tieneRole, } = require('../middlewares')
 
 const {
@@ -19,6 +18,7 @@ const {
     borrarUsuario } = require('../controllers/Usuarios');
 
 const router = Router();
+
 
 router.post('/nuevo/', [
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),

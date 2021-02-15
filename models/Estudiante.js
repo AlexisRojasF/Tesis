@@ -20,7 +20,7 @@ const EstudianteSchema = Schema({
     }],
     grupos:[{
         type: Schema.Types.ObjectId,
-        ref: 'Grupos'
+        ref: 'Grupo'
     }]
 
 });

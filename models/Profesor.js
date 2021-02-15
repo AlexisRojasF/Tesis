@@ -10,12 +10,14 @@ const ProfesorSchema = Schema({
         type: Boolean,
         default: true
     },
+
+    //TODO: cambiar asignaturas a programas y hacer referecia a dicha collecion
     asignaturas:[{
         type: String,
     }],
     grupos:[{
         type: Schema.Types.ObjectId,
-        ref: 'Grupos'
+        ref: 'Grupo'
     }]
 
 });

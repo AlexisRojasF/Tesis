@@ -1,12 +1,11 @@
 const { response, request } = require('express');
-const Programa = require('../models/Programa');
-const Facultad = require('../models/Facultad');
+const {Programa,Facultad} = require('../models');
+
 
 //Crear Programa
 const crearPrograma = async (req = request, res = response) => {
 
     const {nombre ,facultadID} = req.body;
-    
     const LowerNombre = nombre.toLowerCase();
 
     try {
@@ -26,11 +25,8 @@ const crearPrograma = async (req = request, res = response) => {
         programa.nombre = LowerNombre;
         programa.facultad_id = facultadID;
 
-
         const facultad =  await Facultad.findByIdAndUpdate(facultadID, { $addToSet: { programa_id: programa.id  } } );
         await programa.save();
-    
-
 
         res.json({
             programa,
@@ -46,8 +42,8 @@ const crearPrograma = async (req = request, res = response) => {
     }
 }
 
-//Actualizar Programa
 
+//Actualizar Programa
 const actualizarPrograma = async (req = request, res = response) => {
 
     const { id } = req.params;
@@ -61,7 +57,6 @@ const actualizarPrograma = async (req = request, res = response) => {
     })
 
 }
-//-------------------------------
 
 
 //eliminar Programa cambiar estado a false
@@ -69,6 +64,7 @@ const borrarPrograma = async (req = request, res = response) => {
 
     const { id } = req.params;
     const { facultadID } = req.body;
+
     const programa = await Programa.findByIdAndUpdate(id, { estado: false });
     const facultad = await Facultad.findByIdAndUpdate(facultadID, { $pull: { programa_id: programa.id  } } );
 
@@ -80,33 +76,28 @@ const borrarPrograma = async (req = request, res = response) => {
 
 }
 
+
 //Traer una lista de Programa paginada
 const buscarPrograma = async (req = request, res = response) => {
 
     const { limite = 5, desde = 0 } = req.query
     const query = { estado: true };
 
-
-
     const [total, programas] = await Promise.all([
         Programa.countDocuments(query),
         Programa.find(query)
+        .populate('facultad_id')
             .limit(Number(limite))
             .skip(Number(desde))
     ]);
 
 
     res.json({
-        msg: 'usuarios paginador',
+        msg: 'Programas paginados',
         total,
         programas
     })
 }
-
-//--------------------------------------
-
-
-
 
 
 module.exports = {

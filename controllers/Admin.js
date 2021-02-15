@@ -1,5 +1,5 @@
 const { response, request } = require('express');
-const Admin = require('../models/Admin');
+const {Admin} = require('../models');
 
 //Crear Admin
 const crearAdmin = async (req = request, res = response) => {
@@ -41,8 +41,8 @@ const crearAdmin = async (req = request, res = response) => {
     }
 }
 
-//Actualizar Admin
 
+//Actualizar Admin
 const actualizarAdmin = async (req = request, res = response) => {
 
     const { id } = req.params;
@@ -56,7 +56,6 @@ const actualizarAdmin = async (req = request, res = response) => {
     })
 
 }
-//-------------------------------
 
 
 //eliminar Admin cambiar estado a false
@@ -71,6 +70,7 @@ const borrarAdmin = async (req = request, res = response) => {
     })
 
 }
+
 
 //Traer una lista de usuarios paginada
 const buscarAdmin = async (req = request, res = response) => {
@@ -95,7 +95,7 @@ const buscarAdmin = async (req = request, res = response) => {
     })
 }
 
-//--------------------------------------
+
 
 module.exports = {
     crearAdmin,

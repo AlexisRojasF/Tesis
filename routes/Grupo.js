@@ -6,7 +6,9 @@ const {
     tieneRole,
     esAdmin } = require('../middlewares');
 
-const { GrupolExistePorId, EstudiantelExistePorId } = require('../helpers/db-validator');
+const { 
+    GrupolExistePorId,
+    EstudiantelExistePorId } = require('../helpers/db-validator');
 
 const {
     crearGrupo,
@@ -17,8 +19,6 @@ const {
     aceptarSolicitudes
 
 } = require('../controllers/Grupo');
-
-
 
 const router = Router();
 

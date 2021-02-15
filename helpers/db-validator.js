@@ -1,13 +1,6 @@
+const { Usuario, Estudiante, Profesor, Admin,
+    Role, Facultad, Programa, Formulario, Grupo, } = require('../models');
 
-const Usuario = require("../models/Usuario");
-const Estudiante = require("../models/Estudiante");
-const Profesor = require("../models/Profesor");
-const Admin = require("../models/Admin");
-const Role = require("../models/Role");
-const Facultad = require("../models/Facultad");
-const Programa = require("../models/Programa");
-const Formulario = require("../models/Formulario");
-const Grupo = require("../models/Grupo");
 
 
 const emailExiste = async (email = '') => {

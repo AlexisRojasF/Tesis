@@ -17,8 +17,6 @@ const {
     eliminarAsigntura,
     agregarAsigntura} = require('../controllers/Profesor');
 
-
-
 const router = Router();
 
 

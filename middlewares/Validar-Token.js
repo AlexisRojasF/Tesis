@@ -17,7 +17,7 @@ const validarToken = async (req = request, res = response, next) => {
 
     try {
 
-        const { uid, } = jwt.verify(token, process.env.SECRET_JWT_SEED);
+        const { uid } = jwt.verify(token, process.env.SECRET_JWT_SEED);
 
         //leer usuario autentificado
         const usuario = await Usuario.findById(uid);

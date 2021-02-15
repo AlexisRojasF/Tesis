@@ -13,9 +13,7 @@ const {
     actualizarAdmin,
     borrarAdmin,
     buscarAdmin, } = require('../controllers/Admin');
-
-
-
+    
 const router = Router();
 
 

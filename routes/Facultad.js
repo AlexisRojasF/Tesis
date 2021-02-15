@@ -3,8 +3,7 @@ const { check } = require('express-validator');
 const {
     validarCampos,
     validarToken,
-    esAdmin,
-    tieneRole, } = require('../middlewares');
+    esAdmin, } = require('../middlewares');
 
 const {
     FacultadlExistePorId } = require('../helpers/db-validator');
@@ -14,8 +13,6 @@ const {
     borrarFacultad,
     buscarFacultad,
     } = require('../controllers/Facultad');
-
-
 
 const router = Router();
 

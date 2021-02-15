@@ -5,6 +5,7 @@ const { validarCampos } = require('../middlewares/validar-campos');
 
 const router = Router();
 
+
 router.post('/login',[
     check('email', 'El Email es obligatorio').isEmail(),
     check('password', 'El password es obligatoria ').not().isEmpty(),

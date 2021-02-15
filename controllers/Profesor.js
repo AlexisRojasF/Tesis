@@ -1,5 +1,5 @@
 const { response, request } = require('express');
-const Profesor = require('../models/Profesor');
+const {Profesor} = require('../models');
 
 //Crear Profesor
 const crearProfesor = async (req = request, res = response) => {
@@ -41,8 +41,8 @@ const crearProfesor = async (req = request, res = response) => {
     }
 }
 
-//Actualizar Profesor
 
+//Actualizar Profesor
 const actualizarProfesor = async (req = request, res = response) => {
 
     const { id } = req.params;
@@ -56,7 +56,6 @@ const actualizarProfesor = async (req = request, res = response) => {
     })
 
 }
-//-------------------------------
 
 
 //eliminar estudiante cambiar estado a false
@@ -72,34 +71,32 @@ const borrarProfesor = async (req = request, res = response) => {
 
 }
 
+
 //Traer una lista de usuarios paginada
 const buscarProfesors = async (req = request, res = response) => {
 
     const { limite = 5, desde = 0 } = req.query
     const query = { estado: true };
 
-
-
     const [total, profesores] = await Promise.all([
         Profesor.countDocuments(query),
         Profesor.find(query)
+        .populate('usuario_id')
+        .populate('grupos')
             .limit(Number(limite))
             .skip(Number(desde))
     ]);
 
 
     res.json({
-        msg: 'usuarios paginador',
+        msg: 'Profesores paginados',
         total,
         profesores
     })
 }
 
-//--------------------------------------
-
 
 // eliminar asignaturas 
-
 const eliminarAsigntura =  async (req = request, res = response) => {
 
     const { id } = req.params;
@@ -114,9 +111,8 @@ const eliminarAsigntura =  async (req = request, res = response) => {
 
 }
 
-//------------------------------------
-// Agregar  asignaturas 
 
+// Agregar  asignaturas 
 const agregarAsigntura =  async (req = request, res = response) => {
 
     const { id } = req.params;
@@ -131,7 +127,6 @@ const agregarAsigntura =  async (req = request, res = response) => {
 
 }
 
-//------------------------------------
 
 module.exports = {
     crearProfesor,

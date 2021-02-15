@@ -1,6 +1,6 @@
 const { response, request } = require('express');
-const Formulario = require('../models/Formulario');
-const Estudiante = require('../models/Estudiante');
+const { Formulario, Estudiante } = require('../models');
+
 
 //Crear Formulario
 const crearFormulario = async (req = request, res = response) => {
@@ -10,11 +10,9 @@ const crearFormulario = async (req = request, res = response) => {
         teorico,
         pragmatico, } = req.body;
 
-        const usuario = req.usuario;
-
+    const usuario = req.usuario;
 
     try {
-
 
         formulario = new Formulario();
 
@@ -22,12 +20,9 @@ const crearFormulario = async (req = request, res = response) => {
         formulario.formulario.reflexivo = reflexivo;
         formulario.formulario.teorico = teorico;
         formulario.formulario.pragmatico = pragmatico;
-       
 
-        const estudiante = await Estudiante.findOneAndUpdate({usuario_id:usuario._id}, { $addToSet: { formularios: formulario.id } });
+        const estudiante = await Estudiante.findOneAndUpdate({ usuario_id: usuario._id }, { $addToSet: { formularios: formulario.id } });
         await formulario.save();
-
-
 
         res.json({
             formulario,
@@ -44,8 +39,6 @@ const crearFormulario = async (req = request, res = response) => {
 }
 
 
-
-
 //eliminar Formulario cambiar estado a false
 const borrarFormulario = async (req = request, res = response) => {
 
@@ -55,18 +48,16 @@ const borrarFormulario = async (req = request, res = response) => {
     res.json({
         msg: 'borrar',
         formulario,
-        
     })
 
 }
+
 
 //Traer una lista de Formulario paginada
 const buscarFormulario = async (req = request, res = response) => {
 
     const { limite = 5, desde = 0 } = req.query
     const query = { estado: true };
-
-
 
     const [total, formularios] = await Promise.all([
         Formulario.countDocuments(query),
@@ -75,18 +66,12 @@ const buscarFormulario = async (req = request, res = response) => {
             .skip(Number(desde))
     ]);
 
-
     res.json({
-        msg: 'usuarios paginador',
+        msg: 'Formularios paginados',
         total,
         formularios
     })
 }
-
-//--------------------------------------
-
-
-
 
 
 module.exports = {

@@ -1,5 +1,5 @@
 const { response, request } = require('express');
-const Usuario = require('../models/Usuario');
+const {Usuario} = require('../models');
 const bcrypt = require('bcryptjs');
 const { generarJWT } = require('../helpers/jwt');
 const { googleverify } = require('../helpers/google-verify');
@@ -7,13 +7,11 @@ const { googleverify } = require('../helpers/google-verify');
 
 const login = async (req = request, res = response) => {
 
-
     const { email, password } = req.body;
 
-
     try {
-        //Verificar si el email existe
 
+        //Verificar si el email existe
         const usuario = await Usuario.findOne({ email });
 
         if (!usuario) {
@@ -24,7 +22,6 @@ const login = async (req = request, res = response) => {
         }
 
         //Verificar si el usuario esta activo
-
         if (!usuario.estado) {
             return res.status(400).json({
                 ok: false,
@@ -33,7 +30,6 @@ const login = async (req = request, res = response) => {
         }
 
         //Verificar la cantraseña 
-
         const validPassword = bcrypt.compareSync(password, usuario.password);
 
         if (!validPassword) {
@@ -47,8 +43,6 @@ const login = async (req = request, res = response) => {
 
         //Generar el Jwt
         const token = await generarJWT(usuario.id);
-
-
 
         res.json({
             usuario,
@@ -65,11 +59,11 @@ const login = async (req = request, res = response) => {
     }
 }
 
+
+//Metodo para la auntentificacion con google
 const googleSingIn = async (req = request, res = response) => {
 
     const { id_token } = req.body;
-
-
 
     try {
 
@@ -78,6 +72,7 @@ const googleSingIn = async (req = request, res = response) => {
         let usuario = await Usuario.findOne({ email });
 
         if (!usuario) {
+
             // crear el usuario
             const data = {
                 nombre,
@@ -117,6 +112,7 @@ const googleSingIn = async (req = request, res = response) => {
         })
     }
 }
+
 
 module.exports = {
     login,

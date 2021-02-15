@@ -1,15 +1,12 @@
 const { response, request } = require('express');
-const Grupo = require('../models/Grupo');
-const Estudiante = require('../models/Estudiante');
-const Profesor = require('../models/Profesor');
+const {Estudiante,Profesor,Grupo} = require('../models');
+
 
 //Crear Grupo
 const crearGrupo = async (req = request, res = response) => {
 
     const { nombre } = req.body;
-
     const usuario = req.usuario
-
 
     try {
 
@@ -29,11 +26,8 @@ const crearGrupo = async (req = request, res = response) => {
         grupo.nombre = nombre;
         grupo.profesor_id = usuario._id;
 
-
         const profesor = await Profesor.findOneAndUpdate({ usuario_id: usuario._id }, { $addToSet: { grupos: grupo.id } });
         await grupo.save();
-
-
 
         res.json({
             grupo,
@@ -50,15 +44,11 @@ const crearGrupo = async (req = request, res = response) => {
 }
 
 
-
-
 //eliminar Grupo cambiar estado a false
 const borrarGrupo = async (req = request, res = response) => {
 
     const { id } = req.params;
-
     const grupo = await Grupo.findOneAndUpdate(id, { estado: false });
-
 
     res.json({
         msg: 'borrar',
@@ -67,33 +57,32 @@ const borrarGrupo = async (req = request, res = response) => {
 
 }
 
+
 //Traer una lista de Formulario paginada
 const buscargrupos = async (req = request, res = response) => {
 
     const { limite = 5, desde = 0 } = req.query
     const query = { estado: true };
 
-
-
     const [total, grupos] = await Promise.all([
         Grupo.countDocuments(query),
         Grupo.find(query)
+        .populate('estudiantes')
+        .populate('solicitudes')
             .limit(Number(limite))
             .skip(Number(desde))
     ]);
 
 
     res.json({
-        msg: 'usuarios paginador',
+        msg: 'Grupos paginados',
         total,
         grupos
     })
 }
 
-//--------------------------------------
 
 //Agregar al grupo 
-
 const agregarEstudianteGrupo =  async (req = request, res = response) => {
 
     const { estudiante_id } = req.body;
@@ -184,12 +173,6 @@ const aceptarSolicitudes =  async (req = request, res = response) => {
         })
     }
 }
-
-
-
-
-
-
 
 
 module.exports = {
