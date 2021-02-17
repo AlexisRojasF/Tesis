@@ -67,8 +67,6 @@ const buscargrupos = async (req = request, res = response) => {
     const [total, grupos] = await Promise.all([
         Grupo.countDocuments(query),
         Grupo.find(query)
-        .populate('estudiantes')
-        .populate('solicitudes')
             .limit(Number(limite))
             .skip(Number(desde))
     ]);

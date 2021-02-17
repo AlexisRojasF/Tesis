@@ -79,7 +79,6 @@ const buscarFacultad = async (req = request, res = response) => {
     const [total, facultades] = await Promise.all([
         Facultad.countDocuments(query),
         Facultad.find(query)
-        .populate('programa_id')
             .limit(Number(limite))
             .skip(Number(desde))
     ]);

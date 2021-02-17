@@ -109,6 +109,19 @@ const validarRol = async (rol = '') => {
     }
 }
 
+const coleccionesPermitidas = [
+    'Admin',
+    'Estudiante',
+    'Facultad',
+    'Formulario',
+    'Grupo',
+    'Profesor',
+    'Programa',
+    'Role',
+    'Settings',
+    'Usuario',
+];
+
 module.exports = {
     emailExiste,
     usuariolExistePorId,
@@ -119,5 +132,6 @@ module.exports = {
     FacultadlExistePorId,
     ProgramalExistePorId,
     FormulariolExistePorId,
-    GrupolExistePorId
+    GrupolExistePorId,
+    coleccionesPermitidas
 }

@@ -84,9 +84,6 @@ const buscarEstudiantes = async (req = request, res = response) => {
     const [total, estudiantes] = await Promise.all([
         Estudiante.countDocuments(query),
         Estudiante.find(query)
-        .populate('formularios')
-        .populate('grupos')
-        .populate('programa_id')
             .limit(Number(limite))
             .skip(Number(desde))
     ]);

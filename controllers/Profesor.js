@@ -81,8 +81,6 @@ const buscarProfesors = async (req = request, res = response) => {
     const [total, profesores] = await Promise.all([
         Profesor.countDocuments(query),
         Profesor.find(query)
-        .populate('usuario_id')
-        .populate('grupos')
             .limit(Number(limite))
             .skip(Number(desde))
     ]);

@@ -86,7 +86,6 @@ const buscarPrograma = async (req = request, res = response) => {
     const [total, programas] = await Promise.all([
         Programa.countDocuments(query),
         Programa.find(query)
-        .populate('facultad_id')
             .limit(Number(limite))
             .skip(Number(desde))
     ]);

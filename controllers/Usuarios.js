@@ -73,9 +73,6 @@ const findUsuarios = async (req = request, res = response) => {
     const [total, usuarios] = await Promise.all([
         Usuario.countDocuments(query),
         Usuario.find(query)
-        .populate('estudiante')
-        .populate('profesor')
-        .populate('admin')
             .limit(Number(limite))
             .skip(Number(desde))
     ]);
