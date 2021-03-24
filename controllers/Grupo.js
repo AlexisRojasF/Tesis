@@ -1,5 +1,6 @@
 const { response, request } = require('express');
-const {Estudiante,Profesor,Grupo} = require('../models');
+const { Estudiante, Profesor, Grupo } = require('../models');
+const { Notificacion } = require('../sockets/Controller');
 
 
 //Crear Grupo
@@ -81,22 +82,22 @@ const buscargrupos = async (req = request, res = response) => {
 
 
 //Agregar al grupo 
-const agregarEstudianteGrupo =  async (req = request, res = response) => {
+const agregarEstudianteGrupo = async (req = request, res = response) => {
 
     const { estudiante_id } = req.body;
     const { id } = req.params;
 
     try {
 
-        const grupo = await  Grupo.findByIdAndUpdate( id ,{ $addToSet: { estudiantes: estudiante_id } } );
-        const estudiante = await  Estudiante.findByIdAndUpdate( estudiante_id ,{ $addToSet: { grupos: id } } );
+        const grupo = await Grupo.findByIdAndUpdate(id, { $addToSet: { estudiantes: estudiante_id } });
+        const estudiante = await Estudiante.findByIdAndUpdate(estudiante_id, { $addToSet: { grupos: id } });
 
         res.json({
             msg: 'usuarios agregado',
             grupo,
             estudiante
         })
-        
+
     } catch (error) {
         console.log(error);
         res.status(500).json({
@@ -108,20 +109,23 @@ const agregarEstudianteGrupo =  async (req = request, res = response) => {
 
 
 //Agregar a solicitudes
-const agregarEstudianteSolicitudes =  async (req = request, res = response) => {
+const agregarEstudianteSolicitudes = async (req = request, res = response) => {
 
     const { estudiante } = req.body;
     const { id } = req.params;
 
     try {
 
-        const grupo = await  Grupo.findByIdAndUpdate( id ,{ $addToSet: { solicitudes: estudiante } } );
+        const grupo = await Grupo.findByIdAndUpdate(id, { $addToSet: { solicitudes: estudiante } });
 
         res.json({
             msg: 'solicitud enviada',
             grupo
         })
-        
+
+
+        socketController(grupo);
+
     } catch (error) {
         console.log(error);
         res.status(500).json({
@@ -133,20 +137,20 @@ const agregarEstudianteSolicitudes =  async (req = request, res = response) => {
 
 
 //acptar a solicitudes
-const aceptarSolicitudes =  async (req = request, res = response) => {
+const aceptarSolicitudes = async (req = request, res = response) => {
 
     const { estudiante_id } = req.body;
     const { id } = req.params;
 
     try {
 
-        const grupo = await  Grupo.findOne( {solicitudes : estudiante_id} );
+        const grupo = await Grupo.findOne({ solicitudes: estudiante_id });
 
-        if (grupo){
+        if (grupo) {
 
-            await Grupo.findByIdAndUpdate(id ,{ $pull: { solicitudes: estudiante_id } } );
-            await Grupo.findByIdAndUpdate(id ,{ $addToSet: { estudiantes: estudiante_id } } );
-            const estudiante = await  Estudiante.findByIdAndUpdate( estudiante_id ,{ $addToSet: { grupos: id } } );
+            await Grupo.findByIdAndUpdate(id, { $pull: { solicitudes: estudiante_id } });
+            await Grupo.findByIdAndUpdate(id, { $addToSet: { estudiantes: estudiante_id } });
+            const estudiante = await Estudiante.findByIdAndUpdate(estudiante_id, { $addToSet: { grupos: id } });
 
 
             res.json({
@@ -154,7 +158,7 @@ const aceptarSolicitudes =  async (req = request, res = response) => {
                 grupo,
                 estudiante
             })
-        }else{
+        } else {
             return res.status(500).json({
                 ok: false,
                 msj: 'Usuario no existe'
@@ -162,7 +166,7 @@ const aceptarSolicitudes =  async (req = request, res = response) => {
         }
 
 
-        
+
     } catch (error) {
         console.log(error);
         res.status(500).json({

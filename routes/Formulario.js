@@ -7,12 +7,15 @@ const {
     esAdmin } = require('../middlewares');
 
 const {
-    FormulariolExistePorId } = require('../helpers/db-validator');
+    FormulariolExistePorId,
+    usuariolExistePorId } = require('../helpers/db-validator');
 
 const {
     crearFormulario,
     borrarFormulario,
     buscarFormulario,
+    buscarFormularioPorId,
+    FormularioPorId
 } = require('../controllers/Formulario');
 
 const router = Router();
@@ -26,6 +29,22 @@ router.delete('/borrar/:id', [
     check('id').custom(FormulariolExistePorId),
     tieneRole("ADMIN_ROLE", "ESTUDIANTE_ROLE"),
     validarCampos], borrarFormulario);
+
+router.get('/formularios/:id', [
+    validarToken,
+    check('id', 'No es un ID valido').isMongoId(),
+    check('id').custom(usuariolExistePorId),
+    tieneRole("ADMIN_ROLE", "ESTUDIANTE_ROLE"),
+    validarCampos],buscarFormularioPorId
+    );
+
+router.get('/formulario/:id', [
+    validarToken,
+    check('id', 'No es un ID valido').isMongoId(),
+    check('id').custom(FormulariolExistePorId),
+    tieneRole("ADMIN_ROLE", "ESTUDIANTE_ROLE"),
+    validarCampos],FormularioPorId
+    );
 
 
 

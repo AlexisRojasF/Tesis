@@ -1,5 +1,5 @@
 const { response, request } = require('express');
-const {Usuario} = require('../models');
+const { Usuario } = require('../models');
 const bcrypt = require('bcryptjs');
 const { generarJWT } = require('../helpers/jwt');
 const { googleverify } = require('../helpers/google-verify');
@@ -113,8 +113,25 @@ const googleSingIn = async (req = request, res = response) => {
     }
 }
 
+//Meotodo para validar y renovar el token
+const renovarJWT = async (req = request, res = responde) => {
+
+    const { usuario } = req;
+
+    //Generar el Jwt
+    const token = await generarJWT(usuario.id);
+
+    res.json ({
+        usuario,
+        token
+    })
+
+}
+
+
 
 module.exports = {
     login,
-    googleSingIn
+    googleSingIn,
+    renovarJWT
 }
