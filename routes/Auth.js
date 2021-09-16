@@ -19,4 +19,4 @@ router.post('/google',[
 
 router.get('/', validarToken, renovarJWT )
 
-module.exports = router
+module.exports = router;

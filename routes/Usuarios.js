@@ -25,7 +25,7 @@ router.post('/nuevo/', [
     check('genero', 'El genero es obligatorio').not().isEmpty(),
     check('email', 'El Email es obligatorio').isEmail(),
     check('email').custom(emailExiste),
-    check('rol').custom(validarRol),
+    check('rol').custom(validarRol), 
     check('password', 'El password debe ser minimo de 6 caracteres').isLength({ min: 6 }),
     validarCampos
 ], crearUsuario)
