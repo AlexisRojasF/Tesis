@@ -76,10 +76,11 @@ const buscarFormulario = async (req = request, res = response) => {
 //traer formularios de un usuario por id
 const buscarFormularioPorId = async (req = request, res = response) => {
 
-    const { id } = req.params;
+const { id } = req.params;
+ 
 
-    const {formularios} = await Estudiante.findOne({usuario_id : id });
-
+const {formularios} = await Estudiante.findOne({usuario_id : id });
+   console.log(formularios);
     res.json({
         msg: 'formularios',
         formularios

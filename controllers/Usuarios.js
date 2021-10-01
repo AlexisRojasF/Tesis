@@ -53,7 +53,7 @@ const actualizarUsuario = async (req = request, res = response) => {
 
     }
 
-    const usuario = await Usuario.findOneAndUpdate(id, resto);
+    const usuario = await Usuario.findOneAndUpdate({_id:id}, resto);
 
 
     res.json({
