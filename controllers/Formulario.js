@@ -79,7 +79,7 @@ const buscarFormularioPorId = async (req = request, res = response) => {
 const { id } = req.params;
  
 
-const {formularios} = await Estudiante.findOne({usuario_id : id });
+const {formularios} = await Estudiante.findOne({usuario_id : id }).populate('formularios');
    console.log(formularios);
     res.json({
         msg: 'formularios',
