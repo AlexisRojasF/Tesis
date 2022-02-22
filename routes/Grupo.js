@@ -63,6 +63,6 @@ router.put('/aceptar/:id', [
 
 
 
-router.get('/buscar', [validarToken, esAdmin], buscargrupos);
+router.get('/buscar', [validarToken], buscargrupos);
 
 module.exports = router;
