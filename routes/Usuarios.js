@@ -41,7 +41,7 @@ router.get('/usuarios/', validarToken, findUsuarios);
 
 router.delete('/borrar/:id', [
     validarToken,
-    tieneRole('ESTUDIANTE_ROLE', ''),
+    tieneRole('ADMIN_ROLE', ''),
     check('id', 'No es un ID valido').isMongoId(),
     check('id').custom(usuariolExistePorId),
     validarCampos
