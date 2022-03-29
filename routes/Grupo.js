@@ -29,7 +29,7 @@ router.delete('/borrar/:id', [
     validarToken,
     check('id', 'No es un ID valido').isMongoId(),
     check('id').custom(GrupolExistePorId),
-    tieneRole("ADMIN_ROLE", "PROFESOR_ROLE"),
+    tieneRole("ADMIN_ROLE", "PROFESOR_ROLE",'ESTUDIANTE_ROLE'),
     validarCampos], borrarGrupo);
 
 router.put('/agrergar/:id', [
@@ -38,7 +38,7 @@ router.put('/agrergar/:id', [
     check('id').custom(GrupolExistePorId),
     check('estudiante_id', 'No es un ID valido').isMongoId(),
     check('estudiante_id').custom(EstudiantelExistePorId),
-    tieneRole('PROFESOR_ROLE', 'ADMIN_ROLE'),
+    tieneRole('PROFESOR_ROLE', 'ADMIN_ROLE','ESTUDIANTE_ROLE'),
     validarCampos], agregarEstudianteGrupo);
 
 router.put('/solicitud/:id', [
@@ -47,7 +47,7 @@ router.put('/solicitud/:id', [
     check('id').custom(GrupolExistePorId),
     check('estudiante', 'No es un ID valido').isMongoId(),
     check('estudiante').custom(EstudiantelExistePorId),
-    tieneRole('PROFESOR_ROLE', 'ADMIN_ROLE'),
+    tieneRole('PROFESOR_ROLE', 'ADMIN_ROLE','ESTUDIANTE_ROLE'),
     validarCampos], agregarEstudianteSolicitudes,
 );
 router.put('/aceptar/:id', [
