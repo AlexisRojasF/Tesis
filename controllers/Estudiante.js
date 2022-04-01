@@ -43,7 +43,7 @@ const crearEstudiante = async (req = request, res = response) => {
     }
 }
 
-const crearEstudiantedesdeBack = async (req) => {
+const crearEstudiantedesdeBack = async function (req) {
 
     const usuario = req;
 
