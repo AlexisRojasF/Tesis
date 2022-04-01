@@ -6,7 +6,7 @@ const { googleverify } = require('../helpers/google-verify');
 const { crearEstudiantedesdeBack } = require('../controllers/Estudiante');
 
 const {
-    crearProfesor } = require('../controllers/Profesor');
+    crearProfesordesdeBack } = require('../controllers/Profesor');
 
 
 const login = async (req = request, res = response) => {
@@ -49,7 +49,7 @@ const login = async (req = request, res = response) => {
         const token = await generarJWT(usuario.id);
 
         if (usuario.rol == "PROFESOR_ROLE") {
-            crearProfesor(req, res);
+            crearProfesordesdeBack(usuario);
 
         } else if (usuario.rol == "ESTUDIANTE_ROLE") {
             crearEstudiantedesdeBack(usuario);

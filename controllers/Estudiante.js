@@ -65,8 +65,7 @@ const crearEstudiantedesdeBack = async (req) =>{
         await estudiante.save();
         await usuario.save();
 
-        console.log(usuario);
-        console.log(estudiante);
+    
 
 
     } catch (error) {

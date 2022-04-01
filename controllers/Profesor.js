@@ -41,6 +41,36 @@ const crearProfesor = async (req = request, res = response) => {
     }
 }
 
+const crearProfesordesdeBack = async (req) => {
+
+    const usuario = req;
+
+    try {
+
+        let profesor = await Profesor.findOne({ usuario_id: usuario._id });
+
+        if (profesor) {
+
+            return console.log('Un usuario existe con ese id'); 
+        }
+
+        profesor = new Profesor();
+
+        profesor.usuario_id = usuario._id;
+        usuario.profesor = profesor.id;
+
+        await profesor.save();
+        await usuario.save();
+
+
+ 
+
+    } catch (error) {
+        console.log(error);
+     
+    }
+}
+
 
 //Actualizar Profesor
 const actualizarProfesor = async (req = request, res = response) => {
@@ -132,5 +162,6 @@ module.exports = {
     borrarProfesor,
     buscarProfesors,
     eliminarAsigntura,
-    agregarAsigntura
+    agregarAsigntura,
+    crearProfesordesdeBack
 }
