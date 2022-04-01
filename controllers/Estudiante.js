@@ -132,6 +132,7 @@ const buscarEstudiantes = async (req = request, res = response) => {
 
 module.exports = {
     crearEstudiante,
+    crearEstudiantedesdeBack,
     actualizarEstudiante,
     borrarEstudiante,
     buscarEstudiantes
