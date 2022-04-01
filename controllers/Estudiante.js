@@ -43,8 +43,9 @@ const crearEstudiante = async (req = request, res = response) => {
     }
 }
 
-const crearEstudiantedesdeBack = async function (req) {
+const crearEstudiantedesdeBack = async (req) =>{
 
+    console.log(req);
     const usuario = req;
 
     try {
