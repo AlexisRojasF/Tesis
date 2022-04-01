@@ -46,11 +46,11 @@ const crearEstudiante = async (req = request, res = response) => {
 const crearEstudiantedesdeBack = async (req) =>{
 
     console.log(req);
-    const usuario = req;
+    const usuario = req.usuario;
 
     try {
 
-        let estudiante = await Estudiante.findOne({ usuario_id: usuario });
+        let estudiante = await Estudiante.findOne({ usuario_id: usuario._id });
 
         if (estudiante) {
             return console.log('Un usuario existe con ese id');

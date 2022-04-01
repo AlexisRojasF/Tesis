@@ -52,7 +52,7 @@ const login = async (req = request, res = response) => {
             crearProfesor(req, res);
 
         } else if (usuario.rol == "ESTUDIANTE_ROLE") {
-            crearEstudiantedesdeBack(usuario.id);
+            crearEstudiantedesdeBack(usuario);
         }
 
         res.json({
