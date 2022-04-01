@@ -49,10 +49,10 @@ const login = async (req = request, res = response) => {
         const token = await generarJWT(usuario.id);
 
         if (usuario.rol == "PROFESOR_ROLE") {
-            crearProfesor(request, response);
+            crearProfesor(req, res);
         
         } else if (usuario.rol == "ESTUDIANTE_ROLE"){
-            crearEstudiante(request, response);
+            crearEstudiante(req, res);
         }
 
         res.json({
