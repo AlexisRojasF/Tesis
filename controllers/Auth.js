@@ -3,7 +3,7 @@ const { Usuario } = require('../models');
 const bcrypt = require('bcryptjs');
 const { generarJWT } = require('../helpers/jwt');
 const { googleverify } = require('../helpers/google-verify');
-const { crearEstudiante } = require('../controllers/Estudiante');
+const { crearEstudiantedesdeBack } = require('../controllers/Estudiante');
 
 const {
     crearProfesor } = require('../controllers/Profesor');
@@ -50,9 +50,9 @@ const login = async (req = request, res = response) => {
 
         if (usuario.rol == "PROFESOR_ROLE") {
             crearProfesor(req, res);
-        
-        } else if (usuario.rol == "ESTUDIANTE_ROLE"){
-            crearEstudiante(req, res);
+
+        } else if (usuario.rol == "ESTUDIANTE_ROLE") {
+            crearEstudiantedesdeBack(usuario.id);
         }
 
         res.json({
@@ -132,7 +132,7 @@ const renovarJWT = async (req = request, res = responde) => {
     //Generar el Jwt
     const token = await generarJWT(usuario.id);
 
-    res.json ({
+    res.json({
         usuario,
         token
     })

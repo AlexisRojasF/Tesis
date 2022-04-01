@@ -42,6 +42,37 @@ const crearEstudiante = async (req = request, res = response) => {
     }
 }
 
+const crearEstudiantedesdeBack= async (req = request ) => {
+
+    const usuario = req;
+
+    try {
+
+        let estudiante = await Estudiante.findOne({ usuario_id: usuario });
+
+        if (estudiante) {
+            return console.log('Un usuario existe con ese id');
+          
+        }
+
+        estudiante = new Estudiante();
+
+        estudiante.usuario_id = usuario._id;
+        usuario.estudiante = estudiante.id;
+
+        await estudiante.save();
+        await usuario.save();
+
+        console.log(usuario);
+        console.log(estudiante);
+    
+
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
 
 //Actualizar Estudiante
 const actualizarEstudiante = async (req = request, res = response) => {
