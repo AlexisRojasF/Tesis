@@ -3,6 +3,10 @@ const { Usuario } = require('../models');
 const bcrypt = require('bcryptjs');
 const { generarJWT } = require('../helpers/jwt');
 const { googleverify } = require('../helpers/google-verify');
+const { crearEstudiante } = require('../controllers/Estudiante');
+
+const {
+    crearProfesor } = require('../controllers/Profesor');
 
 
 const login = async (req = request, res = response) => {
@@ -43,6 +47,13 @@ const login = async (req = request, res = response) => {
 
         //Generar el Jwt
         const token = await generarJWT(usuario.id);
+
+        if (usuario.rol == "PROFESOR_ROLE") {
+            crearProfesor
+        
+        } else if (usuario.rol == "ESTUDIANTE_ROLE"){
+            crearEstudiante
+        }
 
         res.json({
             usuario,

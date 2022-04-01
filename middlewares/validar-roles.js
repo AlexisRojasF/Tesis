@@ -39,7 +39,7 @@ const tieneRole = (...roles) => {
         if (!roles.includes( req.usuario.rol )) {
             return res.status(500).json({
                 ok: false,
-                msg: `El servicio reuiere uno de estos Roles ${roles}`
+                msg: `El servicio requiere uno de estos Roles ${roles}`
             });
         }
 
