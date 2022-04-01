@@ -1,5 +1,6 @@
 const { response, request } = require('express');
-const {Estudiante} = require('../models');
+const { async } = require('jshint/src/prod-params');
+const { Estudiante } = require('../models');
 
 
 //Crear Estudiante
@@ -42,7 +43,7 @@ const crearEstudiante = async (req = request, res = response) => {
     }
 }
 
-const crearEstudiantedesdeBack= async (req = request ) => {
+const crearEstudiantedesdeBack = async (req) => {
 
     const usuario = req;
 
@@ -52,7 +53,7 @@ const crearEstudiantedesdeBack= async (req = request ) => {
 
         if (estudiante) {
             return console.log('Un usuario existe con ese id');
-          
+
         }
 
         estudiante = new Estudiante();
@@ -65,7 +66,7 @@ const crearEstudiantedesdeBack= async (req = request ) => {
 
         console.log(usuario);
         console.log(estudiante);
-    
+
 
     } catch (error) {
         console.log(error);
